@@ -24,35 +24,41 @@ GET /search?q=Game+of+Thrones&limit=20
 {
     "success": true,
     "result": [{
+        "id": "tt0944947",
         "title": "Game of Thrones",
+        "year": "2011",
         "plot": "Nine noble families fight for control over the mythical lands of Westeros, while a forgotten race returns after being dormant for thousands of years.",
         "runtime": "56min",
         "rating": "9.5",
-        "votes": "1,175,967",
+        "votes": "1,176,070",
         "genres": ["Adventure", "Drama", "Fantasy", "Romance"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMjE3NTQ1NDg1Ml5BMl5BanBnXkFtZTgwNzY2NDA0MjI@._V1_UX182_CR0,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:21:30.296Z"
+        "retrieved": "2017-07-16T22:24:16.113Z"
     }, {
-        "title": "Game of Thrones",
+        "id": "tt2231444",
+        "title": "Game of Thrones (2012)",
         "year": "2012",
         "plot": "Enter the gritty and medieval fantasy world of Westeros as players will forge alliances and wage battles as they play a pivotal role in the ongoing war for power of the Seven Kingdoms.",
         "runtime": "",
         "rating": "8.1",
-        "votes": "1,230",
+        "votes": "1,231",
         "genres": ["Action", "Adventure", "Fantasy", "Thriller"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMjE5NTk5NDg3OV5BMl5BanBnXkFtZTgwNDExNzg2MDE@._V1_UY268_CR4,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:21:29.305Z"
+        "retrieved": "2017-07-16T22:42:42.097Z"
     }, {
+        "id": "tt3109620",
         "title": "Game of Thrones",
+        "year": "2013",
         "plot": "Join the co-creators of Game of Thrones, the hit HBO series based on the books by George R. R. Martin.",
         "runtime": "23min",
         "rating": "7.3",
         "votes": "20",
         "genres": ["Talk-Show"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTc4NzYxNDg5M15BMl5BanBnXkFtZTgwMTM3NTEzMjE@._V1_UY268_CR87,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:21:29.148Z"
+        "retrieved": "2017-07-16T22:42:42.174Z"
     }, {
-        "title": "Game of Thrones: Season 2 - Character Profiles",
+        "id": "tt2653342",
+        "title": "Game of Thrones: Season 2 - Character Profiles (2013)",
         "year": "2013",
         "plot": "Get to know the major power players in Season 2 of 'Game of Thrones' with these seven profiles, including Renly and Stannis Baratheon, Robb Stark, Theon Greyjoy and more.",
         "runtime": "16min",
@@ -60,17 +66,18 @@ GET /search?q=Game+of+Thrones&limit=20
         "votes": "916",
         "genres": ["Documentary", "Short"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MzU2MDE4MV5BMl5BanBnXkFtZTgwNTc3NzA2MDE@._V1_UY268_CR87,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:21:29.527Z"
+        "retrieved": "2017-07-16T22:42:42.277Z"
     }, {
-        "title": "Game of Thrones: A Telltale Games Series",
+        "id": "tt3391176",
+        "title": "Game of Thrones: A Telltale Games Series (2014)",
         "year": "2014",
         "plot": "During the War of the Five Kings, House Forrester finds themselves embroiled in a web of deceit and corruption.",
         "runtime": "",
         "rating": "8.8",
-        "votes": "2,115",
+        "votes": "2,114",
         "genres": ["Adventure", "Drama", "Fantasy"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BYmY5ZjFkOTMtMWYxYy00ZjllLTg5MWMtYTA0OTU3YTNkNmExXkEyXkFqcGdeQXVyMjA1MTA1NDQ@._V1_UY268_CR43,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:21:29.427Z"
+        "retrieved": "2017-07-16T22:42:42.016Z"
     }]
 }
 ```
@@ -91,14 +98,16 @@ GET /title?id=tt0182576
 {
     "success": true,
     "result": {
+        "id": "tt0182576",
         "title": "Family Guy",
+        "year": "1999",
         "plot": "In a wacky Rhode Island town, a dysfunctional family strive to cope with everyday life as they are thrown from one crazy scenario to another.",
         "runtime": "22min",
         "rating": "8.2",
-        "votes": "254,299",
+        "votes": "254,307",
         "genres": ["Animation", "Comedy"],
         "photoUrl": "https://images-na.ssl-images-amazon.com/images/M/MV5BNGRkMTllZTUtZTQyYi00NjVlLTlhZjEtODExNjQ4YjQ1Y2RjXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UY268_CR0,0,182,268_AL_.jpg",
-        "retrieved": "2017-07-16T20:11:30.545Z"
+        "retrieved": "2017-07-16T22:25:09.143Z"
     }
 }
 ```
