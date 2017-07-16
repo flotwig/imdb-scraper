@@ -34,6 +34,10 @@ class Imdb {
         })
     }
     static getMovie = (id: string, cb: ImdbCallback<Movie>) => {
+        if (!/^tt\d+$/.exec(id)) {
+            cb(undefined, 'Invalid title ID supplied.')
+            return
+        }
         Imdb.cache.get(id, (found) => {
             Imdb.queryImdb('title/' + id, {}, ($, err) => {
                 let movie = new Movie()

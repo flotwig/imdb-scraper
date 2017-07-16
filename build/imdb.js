@@ -39,6 +39,10 @@ var Imdb = (function () {
         });
     };
     Imdb.getMovie = function (id, cb) {
+        if (!/^tt\d+$/.exec(id)) {
+            cb(undefined, 'Invalid title ID supplied.');
+            return;
+        }
         Imdb.cache.get(id, function (found) {
             Imdb.queryImdb('title/' + id, {}, function ($, err) {
                 var movie = new movie_1.Movie();
