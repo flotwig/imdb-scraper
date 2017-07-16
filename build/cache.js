@@ -13,7 +13,6 @@ var Cache = (function () {
         var _this = this;
         if (this.redis) {
             this.redis.get(id, function (err, reply) {
-                console.log('from redis: ' + reply);
                 if (!err && reply) {
                     try {
                         hit(JSON.parse(reply));
@@ -36,10 +35,8 @@ var Cache = (function () {
     };
     Cache.prototype.set = function (id, miss, hit) {
         var _this = this;
-        console.log('Cache miss for ' + id);
         miss(function (value) {
             var encodedValue = JSON.stringify(value);
-            console.log('to redis: ' + encodedValue);
             if (_this.redis)
                 _this.redis.set(id, encodedValue);
             else

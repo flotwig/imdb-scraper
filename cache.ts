@@ -22,7 +22,6 @@ class Cache {
     get(id: string, miss: MissCallback, hit: HitCallback) {
         if (this.redis) {
             this.redis.get(id, (err, reply) => {
-                console.log('from redis: ' + reply)
                 if (!err && reply) {
                     try {
                         hit(JSON.parse(reply))
@@ -42,10 +41,8 @@ class Cache {
     }
 
     private set(id: string, miss: MissCallback, hit: HitCallback) {
-        console.log('Cache miss for ' + id);
         miss((value: any) => {
             let encodedValue = JSON.stringify(value)
-            console.log('to redis: ' + encodedValue)
             if (this.redis)
                 this.redis.set(id, encodedValue)
             else

@@ -28,7 +28,6 @@ var Cache = (function () {
     };
     Cache.prototype.set = function (id, miss, hit) {
         var _this = this;
-        console.log('Cache miss for ' + id);
         miss(function (value) {
             if (_this.redis)
                 _this.redis.set(id, JSON.stringify(value));
