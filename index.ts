@@ -43,6 +43,6 @@ app.get('/title', (req, res) => {
     }
 })
 
-app.listen(process.env.PORT || 801, function () {
-    console.log('listening on ' + (process.env.PORT || 80))
+app.listen(process.env.PORT || 8080, function () {
+    console.log('listening on port ' + (process.env.PORT || 8080))
 })
