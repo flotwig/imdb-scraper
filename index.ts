@@ -22,6 +22,10 @@ function sendResponse(res: express.Response, value: any) {
     }).end()
 }
 
+app.get('/', (req, res) => {
+    res.redirect('https://github.com/flotwig/imdb-scraper#readme')
+})
+
 app.get('/search', (req, res) => {
     if (!req.query.q) {
         sendError(res, 'Please supply a query.', 400)
