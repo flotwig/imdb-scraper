@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var bodyParser = require('body-parser');
 var imdb_1 = require("./imdb");
 var express = require("express");
+var morgan = require("morgan");
 var app = express();
+app.use(morgan('combined')); // Apache combined log style
 function sendError(res, err, code, debug) {
     res.json({
         'success': false,

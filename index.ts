@@ -1,9 +1,11 @@
-const bodyParser = require('body-parser')
 import { Imdb } from './imdb'
 import { Movie } from './models/movie'
 import * as express from 'express'
+import * as morgan from 'morgan'
 
 const app = express()
+
+app.use(morgan('combined')) // Apache combined log style
 
 function sendError(res: express.Response, err: string, code?: number, debug?: any) {
     res.json({
