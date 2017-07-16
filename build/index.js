@@ -18,6 +18,9 @@ function sendResponse(res, value) {
         'result': value
     }).end();
 }
+app.get('/', function (req, res) {
+    res.redirect('https://github.com/flotwig/imdb-scraper#readme');
+});
 app.get('/search', function (req, res) {
     if (!req.query.q) {
         sendError(res, 'Please supply a query.', 400);
