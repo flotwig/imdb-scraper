@@ -1,5 +1,4 @@
 import { Imdb } from './imdb'
-import { Movie } from './models/movie'
 import * as express from 'express'
 import * as morgan from 'morgan'
 

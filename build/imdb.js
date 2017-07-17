@@ -10,7 +10,7 @@ var Imdb = (function () {
     Imdb.base = 'http://www.imdb.com/';
     Imdb.cache = new cache_1.Cache();
     Imdb.search = function (q, limit, cb) {
-        Imdb.queryImdb('find', {
+        Imdb.query('find', {
             'q': q,
             's': 'tt',
             'ref_': 'fn_al_tt_mr'
@@ -44,7 +44,7 @@ var Imdb = (function () {
             return;
         }
         Imdb.cache.get(id, function (found) {
-            Imdb.queryImdb('title/' + id, {}, function ($, err) {
+            Imdb.query('title/' + id, {}, function ($, err) {
                 var movie = new movie_1.Movie();
                 movie.id = id;
                 var head = $('.title_wrapper > h1').text().trim();
@@ -77,7 +77,7 @@ var Imdb = (function () {
             cb(m, null);
         });
     };
-    Imdb.queryImdb = function (endpoint, params, cb) {
+    Imdb.query = function (endpoint, params, cb) {
         var queryParts = [];
         for (var key in params) {
             queryParts.push(key + '=' + params[key]);

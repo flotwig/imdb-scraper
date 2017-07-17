@@ -7,7 +7,7 @@ class Imdb {
     static base = 'http://www.imdb.com/'
     static cache = new Cache()
     static search = (q: string, limit: number, cb: ImdbCallback<Movie[]>) => {
-        Imdb.queryImdb('find', {
+        Imdb.query('find', {
             'q': q,
             's': 'tt',
             'ref_': 'fn_al_tt_mr'
@@ -39,7 +39,7 @@ class Imdb {
             return
         }
         Imdb.cache.get(id, (found) => {
-            Imdb.queryImdb('title/' + id, {}, ($, err) => {
+            Imdb.query('title/' + id, {}, ($, err) => {
                 let movie = new Movie()
                 movie.id = id
                 let head = $('.title_wrapper > h1').text().trim()
@@ -70,7 +70,7 @@ class Imdb {
             cb(m, null)
         })
     }
-    static queryImdb = (endpoint: string, params: UrlParams, cb: ImdbCallback<CheerioStatic>) => {
+    static query = (endpoint: string, params: UrlParams, cb: ImdbCallback<CheerioStatic>) => {
         let queryParts = [];
         for (var key in params) {
             queryParts.push(key + '=' + params[key])
