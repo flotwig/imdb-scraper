@@ -11,6 +11,9 @@ var Title = (function () {
         this.rating = '';
         this.votes = '';
         this.photoUrl = '';
+        this.directors = [];
+        this.writers = [];
+        this.stars = [];
         this.retrieved = new Date();
     }
     return Title;

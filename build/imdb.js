@@ -69,6 +69,22 @@ var Imdb = (function () {
                 $('div[itemprop=genre] > a').each(function (i, e) {
                     title.genres.push(e.children[0]['data'].trim());
                 });
+                var nameList = function (arr, selector) {
+                    $(selector).each(function (i, e) {
+                        try {
+                            arr.push({
+                                name: e.children[0]['data'].trim(),
+                                id: /(nm\d+)/g.exec(e.parent.attribs['href'])[1]
+                            });
+                        }
+                        catch (e) {
+                            // TOOD: impl the additional link
+                        }
+                    });
+                };
+                nameList(title.directors, 'span[itemprop=director] > a > span');
+                nameList(title.writers, 'span[itemprop=creator] > a > span');
+                nameList(title.stars, 'span[itemprop=actors] > a > span');
                 title.photoUrl = $('.poster > a > img').attr('src');
                 found(title);
             });

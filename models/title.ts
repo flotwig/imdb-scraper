@@ -1,3 +1,5 @@
+import { Name } from './name'
+
 class Title {
     id: string = ''
     title: string = ''
@@ -9,6 +11,9 @@ class Title {
     votes: string = ''
     retrieved: Date
     photoUrl: string = ''
+    directors: Name[] = []
+    writers: Name[] = []
+    stars: Name[] = []
     constructor() {
         this.retrieved = new Date()
     }
