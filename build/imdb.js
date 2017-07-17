@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var cache_1 = require("./cache");
-var movie_1 = require("./models/movie");
+var title_1 = require("./models/title");
 var request = require("request");
 var cheerio = require("cheerio");
 var Imdb = (function () {
@@ -26,9 +26,9 @@ var Imdb = (function () {
                         return v.name == 'td';
                     }), photoTd = _a[0], textTd = _a[1];
                     var photoA = photoTd.children[1];
-                    var movie = new movie_1.Movie();
-                    movie.id = /^\/title\/(tt\d+).*$/g.exec(photoA.attribs['href'])[1];
-                    Imdb.getMovie(movie.id, function (res, err) {
+                    var title = new title_1.Title();
+                    title.id = /^\/title\/(tt\d+).*$/g.exec(photoA.attribs['href'])[1];
+                    Imdb.getTitle(title.id, function (res, err) {
                         result_1[index] = res;
                         completed_1++;
                         if (completed_1 == rows_1.length)
@@ -38,43 +38,42 @@ var Imdb = (function () {
             }
         });
     };
-    Imdb.getMovie = function (id, cb) {
+    Imdb.getTitle = function (id, cb) {
         if (!/^tt\d+$/.exec(id)) {
             cb(undefined, 'Invalid title ID supplied.');
             return;
         }
         Imdb.cache.get(id, function (found) {
             Imdb.query('title/' + id, {}, function ($, err) {
-                var movie = new movie_1.Movie();
-                movie.id = id;
+                var title = new title_1.Title();
+                title.id = id;
                 var head = $('.title_wrapper > h1').text().trim();
-                var title = $('title').text().trim();
+                var pageTitle = $('title').text().trim();
                 try {
-                    movie.title = /^(.*)\(\d{4}\).*$/g.exec(title)[1].trim();
+                    title.title = /^(.*)\(\d{4}\).*$/g.exec(pageTitle)[1].trim();
                 }
                 catch (e) {
-                    movie.title = head;
+                    title.title = head;
                 }
                 try {
-                    movie.year = /(\d{4})/g.exec(title)[1].trim();
+                    title.year = /(\d{4})/g.exec(pageTitle)[1].trim();
                 }
                 catch (e) {
-                    movie.year = "";
+                    title.year = "";
                 }
-                movie.plot = $('.summary_text').first().text().trim();
-                movie.runtime = $('time').first().text().trim();
-                movie.rating = $('.ratingValue > strong > span').text().trim();
-                movie.votes = $('.imdbRating > a > span').first().text().trim();
-                movie.genres = [];
+                title.plot = $('.summary_text').first().text().trim();
+                title.runtime = $('time').first().text().trim();
+                title.rating = $('.ratingValue > strong > span').text().trim();
+                title.votes = $('.imdbRating > a > span').first().text().trim();
+                title.genres = [];
                 $('div[itemprop=genre] > a').each(function (i, e) {
-                    movie.genres.push(e.children[0]['data'].trim());
+                    title.genres.push(e.children[0]['data'].trim());
                 });
-                movie.photoUrl = $('.poster > a > img').attr('src');
-                movie.retrieved = new Date();
-                found(movie);
+                title.photoUrl = $('.poster > a > img').attr('src');
+                found(title);
             });
-        }, function (m) {
-            cb(m, null);
+        }, function (t) {
+            cb(t, null);
         });
     };
     Imdb.query = function (endpoint, params, cb) {

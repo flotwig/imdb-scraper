@@ -39,7 +39,7 @@ app.get('/title', function (req, res) {
         sendError(res, 'Please supply a title ID.', 400);
     }
     else {
-        imdb_1.Imdb.getMovie(req.query.id, function (result, err) {
+        imdb_1.Imdb.getTitle(req.query.id, function (result, err) {
             if (err)
                 sendError(res, err);
             sendResponse(res, result);

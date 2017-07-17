@@ -41,7 +41,7 @@ app.get('/title', (req, res) => {
     if (!req.query.id) {
         sendError(res, 'Please supply a title ID.', 400)
     } else {
-        Imdb.getMovie(req.query.id, (result, err) => {
+        Imdb.getTitle(req.query.id, (result, err) => {
             if (err) sendError(res, err)
             sendResponse(res, result)
         })

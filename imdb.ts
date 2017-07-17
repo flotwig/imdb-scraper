@@ -1,12 +1,12 @@
 import { Cache } from './cache'
-import { Movie } from './models/movie'
+import { Title } from './models/title'
 import * as request from 'request'
 import * as cheerio from 'cheerio'
 
 class Imdb {
     static base = 'http://www.imdb.com/'
     static cache = new Cache()
-    static search = (q: string, limit: number, cb: ImdbCallback<Movie[]>) => {
+    static search = (q: string, limit: number, cb: ImdbCallback<Title[]>) => {
         Imdb.query('find', {
             'q': q,
             's': 'tt',
@@ -14,7 +14,7 @@ class Imdb {
         }, ($, err) => {
             if (err) cb(undefined, err);
             else {
-                let result: Movie[] = []
+                let result: Title[] = []
                 let rows = $('.findList').find('tr').slice(0, limit)
                 let completed = 0
                 rows.each((index, element) => {
@@ -22,9 +22,9 @@ class Imdb {
                         return v.name == 'td';
                     });
                     let photoA = photoTd.children[1];
-                    let movie = new Movie();
-                    movie.id = /^\/title\/(tt\d+).*$/g.exec(photoA.attribs['href'])[1]
-                    Imdb.getMovie(movie.id, (res, err) => {
+                    let title = new Title();
+                    title.id = /^\/title\/(tt\d+).*$/g.exec(photoA.attribs['href'])[1]
+                    Imdb.getTitle(title.id, (res, err) => {
                         result[index] = res
                         completed++
                         if (completed == rows.length) cb(result, undefined)
@@ -33,41 +33,40 @@ class Imdb {
             }
         })
     }
-    static getMovie = (id: string, cb: ImdbCallback<Movie>) => {
+    static getTitle = (id: string, cb: ImdbCallback<Title>) => {
         if (!/^tt\d+$/.exec(id)) {
             cb(undefined, 'Invalid title ID supplied.')
             return
         }
         Imdb.cache.get(id, (found) => {
             Imdb.query('title/' + id, {}, ($, err) => {
-                let movie = new Movie()
-                movie.id = id
+                let title = new Title()
+                title.id = id
                 let head = $('.title_wrapper > h1').text().trim()
-                let title = $('title').text().trim()
+                let pageTitle = $('title').text().trim()
                 try {
-                    movie.title = /^(.*)\(\d{4}\).*$/g.exec(title)[1].trim()
+                    title.title = /^(.*)\(\d{4}\).*$/g.exec(pageTitle)[1].trim()
                 } catch (e) {
-                    movie.title = head
+                    title.title = head
                 }
                 try {
-                    movie.year = /(\d{4})/g.exec(title)[1].trim()
+                    title.year = /(\d{4})/g.exec(pageTitle)[1].trim()
                 } catch (e) {
-                    movie.year = ""
+                    title.year = ""
                 }
-                movie.plot = $('.summary_text').first().text().trim()
-                movie.runtime = $('time').first().text().trim()
-                movie.rating = $('.ratingValue > strong > span').text().trim();
-                movie.votes = $('.imdbRating > a > span').first().text().trim();
-                movie.genres = []
+                title.plot = $('.summary_text').first().text().trim()
+                title.runtime = $('time').first().text().trim()
+                title.rating = $('.ratingValue > strong > span').text().trim()
+                title.votes = $('.imdbRating > a > span').first().text().trim()
+                title.genres = []
                 $('div[itemprop=genre] > a').each((i, e) => {
-                    movie.genres.push(e.children[0]['data'].trim())
+                    title.genres.push(e.children[0]['data'].trim())
                 })
-                movie.photoUrl = $('.poster > a > img').attr('src')
-                movie.retrieved = new Date();
-                found(movie)
+                title.photoUrl = $('.poster > a > img').attr('src')
+                found(title)
             })
-        }, (m: Movie) => {
-            cb(m, null)
+        }, (t: Title) => {
+            cb(t, null)
         })
     }
     static query = (endpoint: string, params: UrlParams, cb: ImdbCallback<CheerioStatic>) => {
