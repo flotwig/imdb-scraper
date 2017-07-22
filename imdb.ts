@@ -56,9 +56,10 @@ class Imdb {
                     title.year = ""
                 }
                 title.plot = $('.summary_text').first().text().trim()
+                if (title.plot.indexOf('Add a Plot') > -1) title.plot = ''
                 title.runtime = $('time').first().text().trim()
-                title.rating = $('.ratingValue > strong > span').text().trim()
-                title.votes = $('.imdbRating > a > span').first().text().trim()
+                title.rating = $('.ratingValue > strong > span').text().trim() || 'unrated'
+                title.votes = $('.imdbRating > a > span').first().text().trim().replace(/,/g, '') || '0'
                 title.genres = []
                 $('div[itemprop=genre] > a').each((i, e) => {
                     title.genres.push(e.children[0]['data'].trim())
