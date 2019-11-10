@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn build && node ./build/index.js"
+    "start": "node ./build/index.js"
   },
   "author": "Zach Bloomquist <zach@bloomqu.ist>",
   "license": "ISC",
