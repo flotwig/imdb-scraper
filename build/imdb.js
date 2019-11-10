@@ -96,12 +96,8 @@ var Imdb = /** @class */ (function () {
         });
     };
     Imdb.query = function (endpoint, params) {
-        var queryParts = [];
-        for (var key in params) {
-            queryParts.push(key + '=' + params[key]);
-        }
-        var url = Imdb.base + endpoint + '?' + queryParts.join('&');
-        return axios_1.default.get(url)
+        var url = Imdb.base + endpoint;
+        return axios_1.default.get(url, { params: params })
             .then(function (res) {
             return cheerio.load(res.data);
         });

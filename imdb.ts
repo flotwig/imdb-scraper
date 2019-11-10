@@ -90,12 +90,8 @@ class Imdb {
         })
     }
     static query = (endpoint: string, params: UrlParams): Promise<CheerioStatic> => {
-        let queryParts = [];
-        for (var key in params) {
-            queryParts.push(key + '=' + params[key])
-        }
-        let url = Imdb.base + endpoint + '?' + queryParts.join('&');
-        return axios.get(url)
+        let url = Imdb.base + endpoint;
+        return axios.get(url, { params })
         .then(res => {
             return cheerio.load(res.data)
         })
