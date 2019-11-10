@@ -1,15 +1,15 @@
 import * as redis from 'redis'
 
 interface HitCallback {
-    (any): void
+    (a: any): void
 }
 
 interface MissCallback {
-    (HitCallback): void
+    (a: HitCallback): void
 }
 
 class Cache {
-    private redis: redis.RedisClient
+    private redis?: redis.RedisClient
     private inMemory: Object = {}
 
     constructor() {
@@ -26,7 +26,7 @@ class Cache {
                     try {
                         hit(JSON.parse(reply))
                     } catch (e) {
-                        this.redis.del(id)
+                        this.redis?.del(id)
                         this.set(id, miss, hit)
                     }
                 } else
@@ -34,6 +34,7 @@ class Cache {
             })
         } else {
             if (this.inMemory.hasOwnProperty(id))
+                // @ts-ignore
                 hit(JSON.parse(this.inMemory[id]))
             else
                 this.set(id, miss, hit)
@@ -46,6 +47,7 @@ class Cache {
             if (this.redis)
                 this.redis.set(id, encodedValue)
             else
+                // @ts-ignore
                 this.inMemory[id] = encodedValue;
             hit(value)
         })

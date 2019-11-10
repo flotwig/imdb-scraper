@@ -27,25 +27,31 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res) => {
     if (!req.query.q) {
-        sendError(res, 'Please supply a query.', 400)
-    } else {
-        let limit = req.query.limit || 5;
-        Imdb.search(req.query.q, limit, (result, err) => {
-            if (err) sendError(res, err)
-            sendResponse(res, result)
-        })
+        return sendError(res, 'Please supply a query.', 400)
     }
+
+    let limit = req.query.limit || 5;
+    return Imdb.search(req.query.q, limit)
+    .then(result => {
+        return sendResponse(res, result)
+    })
+    .catch(err => {
+        return sendError(res, err)
+    })
 })
 
 app.get('/title', (req, res) => {
     if (!req.query.id) {
-        sendError(res, 'Please supply a title ID.', 400)
-    } else {
-        Imdb.getTitle(req.query.id, (result, err) => {
-            if (err) sendError(res, err)
-            sendResponse(res, result)
-        })
+        return sendError(res, 'Please supply a title ID.', 400)
     }
+
+    return Imdb.getTitle(req.query.id)
+    .then(result => {
+        return sendResponse(res, result)
+    })
+    .catch(err => {
+        return sendError(res, err)
+    })
 })
 
 app.listen(process.env.PORT || 8080, function () {

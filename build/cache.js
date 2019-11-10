@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var redis = require("redis");
-var Cache = (function () {
+var Cache = /** @class */ (function () {
     function Cache() {
         this.inMemory = {};
         if (process.env.REDIS_URL)
@@ -13,12 +13,13 @@ var Cache = (function () {
         var _this = this;
         if (this.redis) {
             this.redis.get(id, function (err, reply) {
+                var _a;
                 if (!err && reply) {
                     try {
                         hit(JSON.parse(reply));
                     }
                     catch (e) {
-                        _this.redis.del(id);
+                        (_a = _this.redis) === null || _a === void 0 ? void 0 : _a.del(id);
                         _this.set(id, miss, hit);
                     }
                 }
@@ -28,6 +29,7 @@ var Cache = (function () {
         }
         else {
             if (this.inMemory.hasOwnProperty(id))
+                // @ts-ignore
                 hit(JSON.parse(this.inMemory[id]));
             else
                 this.set(id, miss, hit);
@@ -40,6 +42,7 @@ var Cache = (function () {
             if (_this.redis)
                 _this.redis.set(id, encodedValue);
             else
+                // @ts-ignore
                 _this.inMemory[id] = encodedValue;
             hit(value);
         });

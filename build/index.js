@@ -23,28 +23,28 @@ app.get('/', function (req, res) {
 });
 app.get('/search', function (req, res) {
     if (!req.query.q) {
-        sendError(res, 'Please supply a query.', 400);
+        return sendError(res, 'Please supply a query.', 400);
     }
-    else {
-        var limit = req.query.limit || 5;
-        imdb_1.Imdb.search(req.query.q, limit, function (result, err) {
-            if (err)
-                sendError(res, err);
-            sendResponse(res, result);
-        });
-    }
+    var limit = req.query.limit || 5;
+    return imdb_1.Imdb.search(req.query.q, limit)
+        .then(function (result) {
+        return sendResponse(res, result);
+    })
+        .catch(function (err) {
+        return sendError(res, err);
+    });
 });
 app.get('/title', function (req, res) {
     if (!req.query.id) {
-        sendError(res, 'Please supply a title ID.', 400);
+        return sendError(res, 'Please supply a title ID.', 400);
     }
-    else {
-        imdb_1.Imdb.getTitle(req.query.id, function (result, err) {
-            if (err)
-                sendError(res, err);
-            sendResponse(res, result);
-        });
-    }
+    return imdb_1.Imdb.getTitle(req.query.id)
+        .then(function (result) {
+        return sendResponse(res, result);
+    })
+        .catch(function (err) {
+        return sendError(res, err);
+    });
 });
 app.listen(process.env.PORT || 8080, function () {
     console.log('listening on port ' + (process.env.PORT || 8080));
