@@ -66,9 +66,12 @@ class Imdb {
                     title.rating = $('.ratingValue > strong > span').text().trim() || 'unrated'
                     title.votes = $('.imdbRating > a > span').first().text().trim().replace(/,/g, '') || '0'
                     title.genres = []
-                    $('div[itemprop=genre] > a').each((i, e) => {
+                    $('.subtext > a').toArray()
+                    // @ts-ignore
+                    .filter(a => (a.href || '').includes('genres'))
+                    .forEach((e) => {
                         // @ts-ignore
-                        title.genres.push(e.children[0]['data'].trim())
+                        title.genres.push(e.innerText.trim())
                     })
                     let nameList = (arr: Name[], selector: string) => {
                         $(selector).each((i, e) => {
