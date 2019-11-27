@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var cache_1 = require("./cache");
 var title_1 = require("./models/title");
 var axios_1 = require("axios");
+var debug_1 = require("debug");
 var Bluebird = require("bluebird");
 var cheerio = require("cheerio");
+var debug = debug_1.default('imdb-scraper:imdb');
 var Imdb = /** @class */ (function () {
     function Imdb() {
     }
@@ -28,6 +30,7 @@ var Imdb = /** @class */ (function () {
                     throw new Error('could not get title id for row');
                 }
                 var id = matches[1];
+                debug('found result, getting title', { id: id, q: q });
                 return Imdb.getTitle(id);
             });
         });
@@ -88,11 +91,10 @@ var Imdb = /** @class */ (function () {
                     nameList(title.writers, 'span[itemprop=creator] > a > span');
                     nameList(title.stars, 'span[itemprop=actors] > a > span');
                     title.photoUrl = $('.poster > a > img').attr('src');
+                    debug('got title %o', title);
                     found(title);
                 });
-            }, function (t) {
-                resolve(t);
-            });
+            }, resolve);
         });
     };
     Imdb.query = function (endpoint, params) {

@@ -2,8 +2,11 @@ import { Cache } from './cache'
 import { Title } from './models/title'
 import { Name } from './models/name'
 import axios from 'axios'
+import debugModule from 'debug'
 import * as Bluebird from 'bluebird'
 import * as cheerio from 'cheerio'
+
+const debug = debugModule('imdb-scraper:imdb')
 
 class Imdb {
     static base = 'http://www.imdb.com/'
@@ -26,6 +29,9 @@ class Imdb {
                     throw new Error('could not get title id for row')
                 }
                 const id = matches[1]
+
+                debug('found result, getting title', { id, q })
+
                 return Imdb.getTitle(id)
             })
         })
@@ -82,11 +88,12 @@ class Imdb {
                     nameList(title.writers, 'span[itemprop=creator] > a > span')
                     nameList(title.stars, 'span[itemprop=actors] > a > span')
                     title.photoUrl = $('.poster > a > img').attr('src')
+
+                    debug('got title %o', title)
+
                     found(title)
                 })
-            }, (t: Title) => {
-                resolve(t)
-            })
+            }, resolve)
         })
     }
     static query = (endpoint: string, params: UrlParams): Promise<CheerioStatic> => {
