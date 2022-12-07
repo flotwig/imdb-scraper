@@ -15,7 +15,7 @@
     "bluebird": "^3.7.1",
     "cheerio": "^1.0.0-rc.2",
     "debug": "^4.1.1",
-    "express": "^4.15.3",
+    "express": "^4.18.2",
     "morgan": "^1.9.1",
     "redis": "^2.7.1",
     "typescript": "^3.7.2"
